@@ -1,0 +1,116 @@
+\usepackage[ngerman]{babel}
+
+\usepackage[latin1]{inputenc}
+\usepackage{epsfig}
+\usepackage{bezier}
+\usepackage{xr}
+\usepackage{srcltx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{array}
+
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{booktabs}  % for table in Latex
+\usepackage{theorem}
+\usepackage{longtable}
+\usepackage{ssm}
+\usepackage{pifont}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{ifthen}%\externaldocument[LSG-]{loesung}
+\usepackage{enumerate}
+\usepackage{enumitem} % Customize enumerate, itemize and description environments
+\setlist[enumerate]{topsep=2pt, itemsep=5pt}
+\setlist[itemize]{topsep=0pt, itemsep=2pt, midpenalty=10000}
+
+\usepackage{psfrag}   % for the letters in .eps figures 
+
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{graphicx}
+\usepackage{lscape}
+
+\usepackage{color}
+\definecolor{hell_blau}{RGB}{0, 102, 255}
+
+\usepackage{framed}
+
+\usepackage[e]{esvect} % Darstellung von Vektoren
+
+\usepackage{tabularx}	% Tabellen mit Größenangaben
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\arraybackslash}p{#1}}
+
+\usepackage{multirow}	% Zellen einer Tabelle in mehrere Zeilen unterteilen
+
+\usepackage{rotating} % Bilder quer auf Seite darstellen
+\usepackage{lscape}		% 
+\usepackage{fancyhdr}
+\setlength{\headheight}{30pt}
+
+\usepackage{setspace}
+
+\usepackage{cancel} % Zum Streichen von Termen in Gleichungen
+\renewcommand{\CancelColor}{\color{red}} %change cancel color to red
+
+\usepackage{caption}
+\captionsetup{
+  justification=centering,
+  singlelinecheck=off
+}
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+
+% Zur Formatierung von Titeln usw.:
+\usepackage{titlesec}
+\titleformat{\chapter}[frame]{\normalfont\LARGE\bfseries}
+    {}{5pt}{\centering \sc}
+		\titlespacing{\chapter}{0cm}{-2cm}{0cm}
+
+%\usepackage[babel,german=quotes]{csquotes}
+\usepackage[
+bibstyle=numeric-comp,    % Zitierstil
+isbn=false,                % ISBN nicht anzeigen, gleiches geht mit nahezu allen anderen Feldern
+%pagetracker=true,          % ebd. bei wiederholten Angaben (false=ausgeschaltet, page=Seite, spread=Doppelseite, true=automatisch)
+maxbibnames=50,            % maximale Namen, die im Literaturverzeichnis angezeigt werden (ich wollte alle)
+maxcitenames=3,            % maximale Namen, die im Text angezeigt werden, ab 4 wird u.a. nach den ersten Autor angezeigt
+autocite=inline,           % regelt Aussehen für \autocite (inline=\parancite)
+block=space,               % kleiner horizontaler Platz zwischen den Feldern
+backref=true,              % Seiten anzeigen, auf denen die Referenz vorkommt
+backrefstyle=three+,       % fasst Seiten zusammen, z.B. S. 2f, 6ff, 7-10
+date=short,                % Datumsformat
+giveninits=true,
+backend=biber]{biblatex}
+\addbibresource{Literatur.bib}
+\setlength{\bibitemsep}{10pt}
+%Autorenformat ändern
+%\DeclareNameFormat{default}{%Vollzitate
+%  \ifnum\value{listcount}=1\relax
+%    \iffirstinits
+%      {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
+%      {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
+%  \else
+%    \iffirstinits
+%      {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
+%      {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}%
+%  \fi
+%  \usebibmacro{name:andothers}} 
+	
+
+\usepackage[babel,german=quotes]{csquotes}
+\AtBeginBibliography{%
+  \renewcommand*{\mkbibnamelast}[1]{\textsc{#1}}}
+	
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=hell_blau, citecolor=red]{hyperref}
+
+
+%\renewcommand{\textfraction}{0.0}
+%\renewcommand{\topfraction}{1.0}
+%\renewcommand{\bottomfraction}{1.0}
+%\renewcommand{\thefootnote}{\arabic{footnote})~}
+%\renewcommand{\labelenumi}{(\arabic{enumi})}

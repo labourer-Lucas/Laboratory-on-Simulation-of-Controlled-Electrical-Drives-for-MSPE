@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	Section for Page Layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\singlespacing
+%\onehalfspacing
+%\doublespacing
+
+\pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%%%%%
+% 	all about the text and page style
+%		see Latex_layout.svg
+%   1. one inch + \hoffset
+%   2. one inch + \voffset
+%   3. \oddsidemargin = 31pt
+%   4. \topmargin = 20pt
+%   5. \headheight = 12pt
+%   6. \headsep = 25pt
+%   7. \textheight = 592pt
+%   8. \textwidth = 390pt
+%   9. \marginparsep = 10pt
+%  10. \marginparwidth = 35pt
+%  11. \footskip = 30pt
+
+%		DIN A4 : height x width: 29.7 cm x 21.0 cm
+%		1 inch = 2.54 cm
+%		define page layout using package "`setlength"'
+\setlength{\hoffset}{-0.54cm}  
+\setlength{\voffset}{-0.54cm}  
+\setlength{\oddsidemargin}{+0.3cm}
+\setlength{\evensidemargin}{-0.3cm} 
+\setlength{\topmargin}{0.0cm}
+\setlength{\headheight}{0.6cm}
+\setlength{\headsep}{1cm}
+\setlength{\textheight}{23.6cm}
+\setlength{\textwidth}{17.0cm}
+\setlength{\marginparsep}{0.0cm}  
+\setlength{\marginparwidth}{0cm}  
+\setlength{\footskip}{1cm}
+
+% additional outlay definitions
+%	no indent for new paragraph by \\
+\setlength{\parindent}{0mm}
+\setlength{\marginparpush}{0cm}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    	Set line spacing  (by Multiplier ... 1.5 here)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\baselinestretch}{1.05}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    	Fancy Page Layout with Fancy Header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\pagestyle{empty}\origdoublepage}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	all about head & foot rule 
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\setlength{\headwidth}{\textwidth}
+
+%\renewcommand{\rightmark}{\thesection\ #1}
+%\renewcommand{\leftmark}{Chapter \thechapter}
+%\renewcommand{\chaptermark}[1]{\markboth{Chapter~\thechapter:\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markboth{\textsc{\thesection.~#1}}{}}
+\renewcommand{\subsectionmark}[1]{\markright{\textsc{\thesubsection.~#1}}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	all about shown content in header
+%\lhead[\bfseries Page \thepage]{\bfseries\rightmark}
+\lhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
+%\rhead[\bfseries\leftmark]{\bfseries Page \thepage}
+\rhead[\fancyplain{}{}]{\fancyplain{}{\rightmark}}
+\cfoot{--~\thepage~--}
+% \rfoot{\bfseries\thepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\cfoot{--~\thepage~--} % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.5pt}}
+

@@ -1,0 +1,226 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AMSTHM new commands %%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newtheoremstyle{MyPlain}% name
+%  {9pt}%      Space above, empty = `usual value'
+% 	{9pt}%      Space below
+%  {\itshape}% Body font
+%  {\parindent}%         Indent amount (empty = no indent, \parindent = para indent)
+%  {\bfseries}% Thm head font
+%  {}%        Punctuation after thm head
+%  {0.5em}% Space after thm head: \newline = linebreak
+%  {}%         Thm head spec 
+%
+%\theoremstyle{MyPlain} %default[chapter]
+
+%\newtheorem{theorem}{Theorem}[Section]
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%%\newtheorem*{definition*}{Definition}
+%\newtheorem{remark}[theorem]{Remark}
+%\newtheorem{claim}[theorem]{Claim}
+%\newtheorem{example}[theorem]{Example}
+%\newtheorem{examples}[theorem]{Examples}
+%\newtheorem{assumption}[theorem]{Assumption}
+%\newtheorem{motivation}[theorem]{Motivation}
+%\newtheorem{property}{Property}
+%\newtheorem{note}[theorem]{Note}
+ %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AMSTHM new commands %%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	(RE-)DEFINE NEW MATH EXPRESSIONS
+
+%	Define new math operators
+%\DeclareMathOperator{\kern}{kern} %somewhere already defined
+\DeclareMathOperator{\essinf}{ess-inf}
+\DeclareMathOperator*{\esssup}{ess-sup}
+\DeclareMathOperator*{\supr}{sup}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\graph}{graph}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\sat}{sat}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\fin}{fin}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\lin}{lin}
+
+%	Abbreviate sets, compact sets  (of numbers, ...)
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rp}{\mathbb{R}_{\geq 0}}
+\newcommand{\Rsp}{\mathbb{R}_{> 0}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Cn}{\mathbb{C}_{< 0}}
+\newcommand{\Czp}{\mathbb{C}_{\geq 0}}
+%	compact set
+\newcommand{\cset}[1]{\mathfrak{#1}}
+%	open set
+\newcommand{\oset}[1]{\mathcal{#1}}
+%	function set
+\newcommand{\fset}[1]{\mathcal{#1}}
+%	system class 
+\newcommand{\sclass}[1]{\mathcal{#1}}
+%	operator class 
+\newcommand{\oclass}[1]{\mathcal{#1}}
+%	boundary set
+\newcommand{\bset}[1]{\mathcal{#1}}
+
+%	often used symbols or nomenclature
+
+%	special for Praktikum ET S2
+\newcommand{\eff}{\rm{eff}}
+\newcommand{\str}{\rm{STR}}
+
+
+\newcommand{\myref}{\rm{ref}}
+%	my (gain) scaling
+\newcommand{\gsc}{\varsigma}
+\newcommand{\gscmin}{\underline{\varsigma}}
+%	high-frequency gain
+\newcommand{\hfg}{\gamma_0}
+%	steady-state gain
+\newcommand{\ssg}{\gamma_{\infty}}
+%	root locus center
+\newcommand{\rlc}{\Xi}
+%	boundaries
+%\newcommand{\pF}{\mathcal{F}}
+\newcommand{\pF}{\psi}
+
+\newcommand{\pFE}{\psi_E}
+\newcommand{\pFphi}{\mathcal{F}_{\phi}}
+\newcommand{\dx}[1]{{\rm \, d} #1 \,}
+\newcommand{\fdiff}[2]{\frac{\textrm{d}^{#1}}{\textrm{d}#2^{#1}}\,}
+\newcommand{\fpartial}[2]{\frac{\partial^{#1}}{\partial #2^{#1}}\,}
+\newcommand{\fpartials}[3]{\frac{\partial^{#1}{#3}}{\partial #2^{#1}}\,}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\foraa}{\textrm{for~a.a.~}}
+%	certain instants of time
+\newcommand{\tstar}{t^{\star}}
+\newcommand{\tlstar}{t_{\star}}
+%	motion control objectives
+\newcommand{\trise}[1]{t_{y(\cdot),{#1}}^{r}}
+\newcommand{\triseref}[1]{t_{{\myref},{#1}}^{r}}
+\newcommand{\tset}[1]{t_{y(\cdot),{#1}}^{s}}
+\newcommand{\tsetref}[1]{t_{{\myref},{#1}}^{s}}
+\newcommand{\os}{\Delta_{y(\cdot)}^{os}}
+\newcommand{\osref}{\Delta_{\myref}^{os}}
+%	gains 
+\newcommand{\kmax}{k_{\max}}
+\newcommand{\kinf}{k_{\infty}}
+\newcommand{\kmin}{k_{\min}}
+\newcommand{\kstar}{k^{\star}}
+% control
+\newcommand{\ufeas}{u_{\rm{feas}}}
+\newcommand{\uhat}{\hat{u}}
+
+\newcommand{\setdef}[2]{\left\{\ #1\ \left|\vphantom{#1}\ #2\ \right.\right\}}
+
+%	function spaces
+\newcommand{\Lp}[1]{\fset{L}^{#1}}
+\newcommand{\Lone}{\fset{L}^{1}}
+\newcommand{\Loneloc}{\fset{L}^{1}_{\loc}}
+\newcommand{\Ltwo}{\fset{L}^{2}}
+\newcommand{\Linf}{\fset{L}^{\infty}}
+\newcommand{\Linfloc}{\fset{L}^{\infty}_{\loc}}
+\newcommand{\Ck}{\fset{C}^{k}}
+\newcommand{\Czero}{\fset{C}}
+\newcommand{\Cone}{\fset{C}^{1}}
+\newcommand{\Cinf}{\fset{C}^{\infty}}
+\newcommand{\Wkinf}{\fset{W}^{k,\infty}}
+\newcommand{\Woneinf}{\fset{W}^{1,\infty}}
+\newcommand{\Wtwoinf}{\fset{W}^{2,\infty}}
+
+
+%	lapace
+\newcommand{\laplaceT}[1]{\mathscr{L}\left\{#1\right\}}
+
+%	myVector = \mv
+\newcommand{\mv}[1]{\boldsymbol{#1}}
+%	myMatrix = \mm
+\newcommand{\mm}[1]{\boldsymbol{#1}}
+%	myOperator = \mO
+\newcommand{\mo}[1]{\boldsymbol{\mathfrak{#1}}}
+%	norm ||.||
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+% ||.||_infty
+\newcommand{\esnorm}[1]{\lVert #1 \rVert_{\infty}}
+\newcommand{\Lnorm}[2]{\lVert #2 \rVert_{\fset{L}^{#1}}}
+%	inner product <.,.>
+\newcommand{\iproduct}[2]{\langle #1,\, #2 \rangle}
+%	for dimensions e.g. [Nm]
+\newcommand{\di}[1]{\left[\rm{#1}\right]}
+
+% for typewriting:
+\newcommand{\tw}[1]{{\tt #1}}
+
+%	system classes
+\newcommand{\Sonelin}{\sclass{S}_1^{\lin}}
+\newcommand{\Stwolin}{\sclass{S}_2^{\lin}}
+\newcommand{\Sone}{\sclass{S}_1}
+\newcommand{\Stwo}{\sclass{S}_2}
+
+%	Dimensions
+\newcommand{\Ohm}{\Omega}
+%
+%	CHANGE ENUMERATE NUMBERING
+\renewcommand{\labelenumi}{\arabic{enumi}.)}
+%\renewcommand{\labelenumii}{(\alph{enumii})}
+% 	
+
+% define colors for TIKZ
+\definecolor{brown}{RGB}{153, 51,0} %	from Matlab (0.6*255, 0.2*255,0)
+\definecolor{orange}{RGB}{255, 127.5,0}
+\definecolor{gray}{RGB}{127.5, 127.5,127.5}
+%\definecolor{r2}{RGB}{252,177,49}
+%\definecolor{r3}{RGB}{35,34,35}
+%\definecolor{r4}{RGB}{0,157,87}
+%\definecolor{r5}{RGB}{238,50,78}
+
+
+%	define macros to draw colored lines with TIKZ package
+\newcommand{\blueline}{\protect\tikz{\protect\draw[very thick,blue] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\orangeline}{\protect\tikz{\protect\draw[very thick,orange] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\brownline}{\protect\tikz{\protect\draw[very thick,brown] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\bluedashdottedline}{\protect\tikz{\protect\draw[very thick,blue,dashdotted] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\bluedottedline}{\protect\tikz{\protect\draw[very thick,blue,dotted] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\bluedashedline}{\protect\tikz{\protect\draw[very thick,dashed,blue] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\cyanline}{\protect\tikz{\protect\draw[very thick,cyan] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\cyandashdottedline}{\protect\tikz{\protect\draw[very thick,dashdotted,cyan] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\cyandashedline}{\protect\tikz{\protect\draw[very thick,dashed,cyan] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\cyandottedline}{\protect\tikz{\protect\draw[very thick,dotted,cyan] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\magentaline}{\protect\tikz{\protect\draw[very thick,magenta] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\magentadashedline}{\protect\tikz{\protect\draw[very thick, dashed,magenta] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\magentdaottedline}{\protect\tikz{\protect\draw[very thick, dotted,magenta] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\magentadashdottedline}{\protect\tikz{\protect\draw[very thick, dashdotted,magenta] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\greenline}{\protect\tikz{\protect\draw[very thick,green] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\blackline}{\protect\tikz{\protect\draw[very thick,black] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\blackdashedline}{\protect\tikz{\protect\draw[very thick,dashed,black] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\blackdottedline}{\protect\tikz{\protect\draw[very thick,dotted,black] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\blackdashdottedline}{\protect\tikz{\protect\draw[very thick,black,dashdotted] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\redline}{\protect\tikz{\protect\draw[very thick,red] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\reddottedline}{\protect\tikz{\protect\draw[very thick,dotted,red] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\reddashedline}{\protect\tikz{\protect\draw[very thick,dashed,red] (0,-0.5ex)(0,0)--(4ex,0);}}
+
+\newcommand{\graydashedline}{\protect\tikz{\protect\draw[very thick,dashed,gray] (0,-0.5ex)(0,0)--(4ex,0);}}
+\newcommand{\graydashdottedline}{\protect\tikz{\protect\draw[very thick,dashdotted,gray] (0,-0.5ex)(0,0)--(4ex,0);}}
+
+%	to include colored comments
+\def\ch#1{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+
+\newcommand{\vect}[1]{\vec{#1}}
+\newcommand{\mtx}[1]{{\bf #1}}
+\newcommand{\rz}[1]{\underline{#1}} % Raumzeiger
+\newcommand{\Clarke}[1]{\mathcal{T_C}\left(#1\right)} % Clarke-Transformation
+\newcounter{findex}
+
