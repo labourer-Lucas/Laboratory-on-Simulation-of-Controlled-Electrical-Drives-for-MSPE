@@ -53,33 +53,33 @@ n_Imin = -n_Imax;       % Minimum Noise Amplitude (Percent)[1]
 % Nominal Values of the Seperatly Excited DC Machine 
 N_N = 2000;                 % Nominal Rotor Speed [RPM]
 P_N = 200;                  % = Omega_N*M_MN (Mechanical) Nominal Power [W] 
-M_MN = ;     % Nominal Torque [Nm]
+M_MN = 0.955;     % Nominal Torque [Nm]
 U_AN = 220;                 % Nominal Armature Voltage [V]    
 I_AN = 1;                   % Nominal Armature Current [A]    
 U_EN = 220;                 % Nominal Armature Current [A]]    
 I_EN = 0.1;                 % Nominal Excitation Current [A]  
 
 % Armature Current Circuit 
-L_A = ;               % Inductance [H = Vs/A]
-R_A = ;                   % Resistance [Ohm = V/A]
-T_A = ;              % Time Constant [s]
+L_A = 374e-3;               % Inductance [H = Vs/A]
+R_A = 22;                   % Resistance [Ohm = V/A]
+T_A = L_A/R_A;              % Time Constant [s]
 
 % Excitation Current Circuit  
-R_E = ;                 % Resistance [Ohm]
+R_E = 2200;                 % Resistance [Ohm]
 
 % Mechanic
-Theta_M = ;           % Rotor Inertia Moment [kg*m²]
-C_M = ;                 % Machine Constant [1]
+Theta_M = 0.0013;           % Rotor Inertia Moment [kg*m]
+C_M = 0.96;                 % Machine Constant [1]
 %--------------------------------------------------------------------------
 
 %--------------------------------------------------------------------------
 % Electronic Actuation 
 % without Approximation 
-T_c = 0;                  % Time Constant of the Carrier Signal [s]
+T_c = 1/1000;                  % Time Constant of the Carrier Signal [s]
 
 % with PT1 Approximation
-V_CON = 0;                % Amplification [V]
-T_CON = 0;                % Time Constant [s]
+V_CON = 220;                % Amplification [V]
+T_CON = T_c;                % Time Constant [s]
 %--------------------------------------------------------------------------
 
 
