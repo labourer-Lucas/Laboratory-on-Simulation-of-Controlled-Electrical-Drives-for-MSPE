@@ -20,17 +20,81 @@
 \section{Armature Current Control}
 
 \begin{enumerate}
-\item {\bf *}  
+\item {\bf *}  Integrator windup occurs when the controller output saturates, causing the integrator keeps accumulating error, which will cause overshoot and instability; it occurs when controller with a integrator such as PI and PID controllers; to prevent it, we can use anti-windup schemes.
 \item {\bf *} 
-\item {\bf *} 
+From the differential equations:
+\begin{equation}
+    \begin{cases}
+    U_A = R_A I_A + L_A \frac{dI_A}{dt} + C_M \Psi_{EN} \Omega_M \\
+    \Theta_M \frac{d \Omega_M}{dt}=C_M \Psi_{EN} I_A
+    \end{cases}
+\end{equation}
+The transfer function of the DC machine from armature voltage $U_A$ to angular speed $\Omega_M$ is:
+\begin{equation}
+    F_{DCM}(s) \;=\; \frac{\Omega_M(s)}{U_A(s)} 
+= \frac{V_{DCM}}{1 + sT_M + s^2 T_A T_M}
+\end{equation}
+where $V_{DCM} = \frac{1}{C_M \Psi_{EN}}$, $T_A = \frac{L_A}{R_A}$ and $T_M = \frac{\Theta_M R_A}{(C_M \Psi_{EN})^2}$.
+
+With the numerical values given in the tabel, we have:
+\begin{equation}
+    F_{DCM}(s) = \frac{1.042}{1 + 0.031 s + 0.000527 s^2}        
+\end{equation}
+
+The poles of the system are:
+\begin{equation}    
+    s_{1,2} = -29.41 \pm j 32.1
+\end{equation}
+
+For modulus optimum and symmetrical optimum, $\frac{T_1}{T_\sigma} \geq 4$ and the transfer function above doesn't meet this condition. To make the design by MO and SO, we can introduce a fast inner loop, such as current loop.
+\item {\bf *} Introducing EMF $E_A$ acts as a disturbance to the armature current loop. To compensate it, we can use a feedforward control by adding a voltage equal to $E_A$ to the armature voltage reference. The value of compensation voltage should be equal to 
+\begin{equation}
+  E_{com} =\frac{C_M \Psi_{EN} \Omega_M}{V_{PE}}  
+\end{equation}
+
 \end{enumerate}
 \subsection{Controller Design}
 
 \begin{enumerate}
 \setcounter{enumi}{3} % command for changing the enumeration counter
+\item {\bf *} Becasuse the armature current loop is inner loop, it should be designed to be much faster than the speed loop. 
 \item {\bf *} 
-\item {\bf *} 
-\item {\bf *} 
+The transfer function between the armature voltage $U_A$ and the armature current $I_A$ is:
+\begin{equation}
+    F_{AI}(s) = \frac{I_A(s)}{U_A(s)} = \frac{1/R_A}{1 + sT_A}
+\end{equation}
+
+The transfer function of power electronics parts is:
+\begin{equation}
+    F_{PE}(s) = \frac{U_A(s)}{U^*_A(s)} = \frac{V_{PE}}{1 + sT_{PE}}
+\end{equation}
+
+The transfer function of the current sensor is:
+\begin{equation}
+    F_{IS}(s) = \frac{\hat{I}_A(s)}{I_A(s)} = \frac{1}{1 + sT_{F,I_A}}
+\end{equation}
+
+Therefore, the transfer function of the current control loop is:
+\begin{equation}
+    F_{I_A}(s) = F_{AI}(s) F_{PE}(s) F_{IS}(s)= \frac{\frac{V_{PE}}{R_A}}{(1 + sT_A)(1 + sT_{PE})(1 + sT_{F,I_A})}
+\end{equation}
+
+The system above is a third-order system. Becasuse $T_{F,I_A}+T_{PE} \ll T_A$, we can approximate it to a second-order system by neglecting the smallest time constant:
+\begin{equation}
+    F_{\hat{I}_A}(s) \approx \frac{\frac{V_{PE}}{R_A}}{(1 + sT_A)(1 + sT_{sum,I_A})}
+\end{equation}
+where $T_{sum,I_A} = T_{F,I_A} + T_{PE}$.
+
+Therefore the approximated transfer function of the current control loop is:
+\begin{equation}
+    F_{\hat{I}_A}(s)= \frac{V_{S,I_A}}{(1+sT_{1,I_A})(1+sT_{\sigma,I_A})}
+\end{equation}
+where $V_{S,I_A} = \frac{V_{PE}}{R_A}=0.0455F_{equi,I_A}(s)=\frac{I_A(s)}{I_A^*(s)}\approx\frac{1}{1+sT_{equi,I_A}}$, $T_{1,I_A} = T_A$ and $T_{\sigma,I_A} = T_{sum,I_A}=2.5ms$.
+\item {\bf *} From the optimization table, we can design the PI controller by modulus optimum criterion:
+\begin{equation}
+    F_{C,I_A}(s)=V_{\mathrm{r},I_A}\frac{1+sT_{\mathrm{n},I_A}}{sT_{\mathrm{n},I_A}}
+\end{equation}
+where $T_{\mathrm{n},I_A} = T_{\sigma,I_A}=T_A=17ms$, and $V_{\mathrm{r},I_A} = \frac{T_{1,I_A}}{2V_{S,I_A}T_{\sigma,I_A}} = 74.8$. 
 \end{enumerate}
 
 \section{Speed Control in the Armature Control Range}
@@ -38,9 +102,32 @@
 \begin{enumerate}
 \setcounter{enumi}{10} % command for changing the enumeration counter
 \item {\bf *} 
-\item {\bf *} 
+The closed-loop transfer function of the curren control loop is:
+\begin{equation}
+    F_{equi,I_A}(s) = \frac{\hat{I}_A(s)}{I_A^*(s)} = \frac{F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) }{1 + F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) F_{IS}(s)}=\frac{1+sT_{f,I_{A}}}{1+sT_{\sigma,I_{A}}+s^{2}2T_{\sigma,I_{A}}^{2}}
+\end{equation}
+\item {\bf *} If we  apply a polynomial division by the numerator, we can get:
+\begin{equation}
+    F_{equi,I_A}(s)=\frac{I_A(s)}{I_A^*(s)}\approx\frac{1}{1+sT_{equi,I_A}}
+\end{equation}
+where $T_{equi,I_A} = 2T_{\sigma,I_A} - T_{f,I_A} = 3ms$.
 \item {\bf *}   
+From the differential equations, we can derive the transfer function from the armature current reference $I^*_A$ to the filtered angular speed $\hat{\Omega}_M$:
+\begin{equation}
+    F_{\hat{\Omega}_M}(s) = \frac{\hat{\Omega}_M(s)}{I_A^*(s)} = F_{\hat{\Omega}_M,I_A}(s) \cdot \frac{1}{\Theta_M s} \cdot C_M \Psi_{EN} \cdot F_{equi,I_A}(s)
+\end{equation}
+
+Simplify it to the standard form, we have:
+\begin{equation}
+    F_{\hat{\Omega}_M}(s)=\frac{\hat{\Omega}_M(s)}{I_A^*(s)}=\frac{V_{S,\Omega_M}}{sT_{1,\Omega_M}(1+sT_{\sigma,\Omega_M})}
+\end{equation}
+where $V_{S,\Omega_M} = \frac{R_A}{C_M \Psi_{EN}}=22.92$, $T_{1,\Omega_M} = T_M=\frac{R_A\Theta_M}{C_M^2\Psi_{EN}^2}=31ms$ and $T_{\sigma,\Omega_M} = T_{equi,I_A}+T_{F,\Omega_M}=5ms$.
 \item {\bf *}
+The above system is a $IT_1$ system. From the optimization table, we can design the PI controller by symmetrical optimum criterion:
+\begin{equation}
+    F_{C,\Omega_M}(s)=V_{\mathrm{r},\Omega_M}\frac{1+sT_{\mathrm{n},\Omega_M}}{sT_{\mathrm{n},\Omega_M}}
+\end{equation}
+where $T_{\mathrm{n},\Omega_M} = 4T_{\sigma,\Omega_M}=20ms$, and $V_{\mathrm{r},\Omega_M} = \frac{T_{1,\Omega_M}}{2V_{S,\Omega_M}T_{\sigma,\Omega_M}}=0.135$.
 \end{enumerate}
 
 
