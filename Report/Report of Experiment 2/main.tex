@@ -20,7 +20,7 @@
 \section{Armature Current Control}
 
 \begin{enumerate}
-\item {\bf *}  Integrator windup occurs when the controller output saturates, causing the integrator keeps accumulating error, which will cause overshoot and instability; it occurs when controller with a integrator such as PI and PID controllers; to prevent it, we can use anti-windup schemes.
+\item {\bf *}  Integrator windup occurs when the controller output saturates, causing the integrator keeps accumulating error, which will cause overshoot and instability; it occurs when controller with a integrator such as PI and PID controllers; to prevent it, we can use anti-windup schemes, such as clamping the integrator output, back-calculation, conditional integration, etc.
 \item {\bf *} 
 From the differential equations:
 \begin{equation}
@@ -89,12 +89,12 @@ Therefore the approximated transfer function of the current control loop is:
 \begin{equation}
     F_{\hat{I}_A}(s)= \frac{V_{S,I_A}}{(1+sT_{1,I_A})(1+sT_{\sigma,I_A})}
 \end{equation}
-where $V_{S,I_A} = \frac{V_{PE}}{R_A}=0.0455F_{equi,I_A}(s)=\frac{I_A(s)}{I_A^*(s)}\approx\frac{1}{1+sT_{equi,I_A}}$, $T_{1,I_A} = T_A$ and $T_{\sigma,I_A} = T_{sum,I_A}=2.5ms$.
+where $V_{S,I_A} = \frac{V_{PE}}{R_A}=10$, $F_{equi,I_A}(s)=\frac{I_A(s)}{I_A^*(s)}\approx\frac{1}{1+sT_{equi,I_A}}$, $T_{1,I_A} = T_A$ and $T_{\sigma,I_A} = T_{sum,I_A}=3ms$.
 \item {\bf *} From the optimization table, we can design the PI controller by modulus optimum criterion:
 \begin{equation}
     F_{C,I_A}(s)=V_{\mathrm{r},I_A}\frac{1+sT_{\mathrm{n},I_A}}{sT_{\mathrm{n},I_A}}
 \end{equation}
-where $T_{\mathrm{n},I_A} = T_{\sigma,I_A}=T_A=17ms$, and $V_{\mathrm{r},I_A} = \frac{T_{1,I_A}}{2V_{S,I_A}T_{\sigma,I_A}} = 74.8$. 
+where $T_{\mathrm{n},I_A} = T_{\sigma,I_A}=T_A=17ms$, and $V_{\mathrm{r},I_A} = \frac{T_{1,I_A}}{2V_{S,I_A}T_{\sigma,I_A}} = 0.283A^{-1}$. 
 \end{enumerate}
 
 \section{Speed Control in the Armature Control Range}
@@ -104,13 +104,13 @@ where $T_{\mathrm{n},I_A} = T_{\sigma,I_A}=T_A=17ms$, and $V_{\mathrm{r},I_A} = 
 \item {\bf *} 
 The closed-loop transfer function of the curren control loop is:
 \begin{equation}
-    F_{equi,I_A}(s) = \frac{\hat{I}_A(s)}{I_A^*(s)} = \frac{F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) }{1 + F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) F_{IS}(s)}=\frac{1+sT_{f,I_{A}}}{1+sT_{\sigma,I_{A}}+s^{2}2T_{\sigma,I_{A}}^{2}}
+    F_{equi,I_A}(s) = \frac{\hat{I}_A(s)}{I_A^*(s)F_{IS}(s)} = \frac{F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) }{1 + F_{C,I_A}(s)F_{PE}(s) F_{AI}(s) F_{IS}(s)}=\frac{1+sT_{f,I_{A}}}{1+sT_{\sigma,I_{A}}+s^{2}2T_{\sigma,I_{A}}^{2}}
 \end{equation}
 \item {\bf *} If we  apply a polynomial division by the numerator, we can get:
 \begin{equation}
     F_{equi,I_A}(s)=\frac{I_A(s)}{I_A^*(s)}\approx\frac{1}{1+sT_{equi,I_A}}
 \end{equation}
-where $T_{equi,I_A} = 2T_{\sigma,I_A} - T_{f,I_A} = 3ms$.
+where $T_{equi,I_A} = 2T_{\sigma,I_A} - T_{f,I_A} = 4ms$.
 \item {\bf *}   
 From the differential equations, we can derive the transfer function from the armature current reference $I^*_A$ to the filtered angular speed $\hat{\Omega}_M$:
 \begin{equation}
@@ -121,13 +121,13 @@ Simplify it to the standard form, we have:
 \begin{equation}
     F_{\hat{\Omega}_M}(s)=\frac{\hat{\Omega}_M(s)}{I_A^*(s)}=\frac{V_{S,\Omega_M}}{sT_{1,\Omega_M}(1+sT_{\sigma,\Omega_M})}
 \end{equation}
-where $V_{S,\Omega_M} = \frac{R_A}{C_M \Psi_{EN}}=22.92$, $T_{1,\Omega_M} = T_M=\frac{R_A\Theta_M}{C_M^2\Psi_{EN}^2}=31ms$ and $T_{\sigma,\Omega_M} = T_{equi,I_A}+T_{F,\Omega_M}=5ms$.
+where $V_{S,\Omega_M} = \frac{R_A}{C_M \Psi_{EN}}=22.92$, $T_{1,\Omega_M} = T_M=\frac{R_A\Theta_M}{C_M^2\Psi_{EN}^2}=31ms$ and $T_{\sigma,\Omega_M} = T_{equi,I_A}+T_{F,\Omega_M}=6ms$.
 \item {\bf *}
 The above system is a $IT_1$ system. From the optimization table, we can design the PI controller by symmetrical optimum criterion:
 \begin{equation}
     F_{C,\Omega_M}(s)=V_{\mathrm{r},\Omega_M}\frac{1+sT_{\mathrm{n},\Omega_M}}{sT_{\mathrm{n},\Omega_M}}
 \end{equation}
-where $T_{\mathrm{n},\Omega_M} = 4T_{\sigma,\Omega_M}=20ms$, and $V_{\mathrm{r},\Omega_M} = \frac{T_{1,\Omega_M}}{2V_{S,\Omega_M}T_{\sigma,\Omega_M}}=0.135$.
+where $T_{\mathrm{n},\Omega_M} = 4T_{\sigma,\Omega_M}=24ms$, and $V_{\mathrm{r},\Omega_M} = \frac{T_{1,\Omega_M}}{2V_{S,\Omega_M}T_{\sigma,\Omega_M}}=0.113$.
 \end{enumerate}
 
 
