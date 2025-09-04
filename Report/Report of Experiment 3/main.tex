@@ -19,26 +19,145 @@
  \setcounter{section}{7} % command for changing the section counter
 \section{Signal Flow Diagram of the Fundamental Wave Model}
 \subsection{Drawing of the Signal Flow Diagram}
+
 \begin{enumerate}
 \item 
+From the differential equations of the rotor and stator flux, we can get the signal flow diagram:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/SignalFlowDiagram.png}
+    \caption{Signal Flow Diagram of flux}
+    \label{fig:SignalFlowDiagram}
+\end{figure}
 \item 
+The signal flow diagram of $\underline{\Psi}_h^s$ from $\underline{i}_{s}^s$ and $\underline{i_{r}^r}$ is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/SignalFlowDiagram_h.png}
+    \caption{Signal Flow Diagram of $\underline{\Psi}_h^s$}
+    \label{fig:SignalFlowDiagram_h}
+\end{figure}
+
+The  path for the calculation of $\underline{i}_{s}^s$ by means of $\underline{\Psi}_h^s$ and  $\underline{\Psi}_s^s$ is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/SignalFlowDiagram_is.png}
+    \caption{Signal Flow Diagram of $\underline{i_{s}^s}$}
+    \label{fig:SignalFlowDiagram_is}
+\end{figure}
+
+The path for the calculation of $\underline{i}_{r}^r$ by means of $\underline{\Psi}_h^r$ and  $\underline{\Psi}_r^r$ is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/SignalFlowDiagram_ir.png}
+    \caption{Signal Flow Diagram of $\underline{i_{r}^r}$}
+    \label{fig:Signal Flow Diagram of ir}
+\end{figure}
 \item 
+The path for the calculation of $M_M$  is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/SignalFlowDiagram_Mm.png}
+    \caption{Signal Flow Diagram of $M_M$}
+    \label{fig:Signal Flow Diagram of Mm}
+\end{figure}
 \item 
+The signal flow diagram for the mechanic subsystem with $M_M$ and $M_L$ as an input and $\omega_m$, $\theta_m$ and $\theta_{el}$ as an output is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/SignalFlowDiagram_mech.png}
+    \caption{Signal Flow Diagram of the mechanical subsystem}
+    \label{fig:Signal Flow Diagram of mech}
+\end{figure}
 \item 
+The complete signal flow diagram of the fundamental wave model is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/SignalFlowDiagram_complete.png}
+    \caption{Complete Signal Flow Diagram of the fundamental wave model}
+    \label{fig:Signal Flow Diagram complete}
+\end{figure}
 \item 
+From the equation of the flux, we have:
+\begin{equation}
+    \begin{cases}
+       \underline{\Psi}_s^s = L_s \cdot \underline{i}_s^s + L_m \cdot \underline{i}_r^s \\
+         \underline{\Psi}_r^s = L_m \cdot \underline{i}_s^s + L_r \cdot \underline{i}_r^s\\
+         \underline{\Psi}_h^s = L_m \cdot (\underline{i}_s^s + \underline{i}_r^s)
+    \end{cases}
+\end{equation}
+
+From the equation, we can express $\underline{i}_s^s$ and $\underline{i}_r^s$ as a function of $\underline{\Psi}_s^s$ and $\underline{\Psi}_r^s$:
+\begin{equation}
+    \begin{cases}
+       \underline{i}_s^s = \frac{L_r \cdot \underline{\Psi}_s^s - L_m \cdot \underline{\Psi}_r^s}{L_s L_r - L_m^2} \\
+         \underline{i}_r^s = \frac{L_s \cdot \underline{\Psi}_r^s - L_m \cdot \underline{\Psi}_s^s}{L_s L_r - L_m^2}\\
+         \underline{\Psi}_h^s=\frac{L_m(L_r-L_m)}{L_sL_r-L_m^2}\underline{\Psi}_s^s+\frac{L_m(L_s-L_m)}{L_sL_r-L_m^2}\underline{\Psi}_r^s
+    \end{cases}
+\end{equation}
 \item 
+Therefore, the resulting whole signal flow diagram according to previous equations is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/SignalFlowDiagram_final.png}
+    \caption{Final Signal Flow Diagram of the fundamental wave model}
+    \label{fig:Signal Flow Diagram final}
+\end{figure}
 \end{enumerate}
 \section{ Model of the Asynchronous Machine with Squirrel Cage}
 \begin{enumerate}
 \setcounter{enumi}{7} % command for changing the enumeration counter
-\item
-\item
+\item For an asynchronous machine with a squirrel cage rotor, the rotor windings are short-circuited.  
+Therefore, the rotor voltage fulfills the condition:
+\begin{equation}
+\underline{u_r^r} = 0
+\end{equation}
+\item 
+The synchronous speed can be calculated as follows:
+\begin{equation}
+    N_E=\frac{60f}{p}=\frac{60 \cdot 50}{p}=\frac{3000}{p} \; \text{rpm}
+\end{equation}
+
+Because $N_N=2980 \text{rpm}$, the number of pole pairs is $p=1$.
+
+The nominal rotational speed $\omega_{MN}$, the nominal torque $M_{MN}$ and the nominal slip $s_N$ are:
+\begin{equation}
+    \begin{aligned}
+\omega_{MN} = \frac{2 \pi \cdot 2890}{60} \approx 302.8 \,\text{rad/s}\\
+M_{MN} = \frac{2200}{302.8} \approx 7.27 \,\text{Nm}\\
+s_N = \frac{3000 - 2890}{3000} \approx 0.0367 \; (3.67\%)
+\end{aligned}
+\end{equation}
 \end{enumerate}
 \section{Model of the Permanent Magnet Synchronous Machine}
 \begin{enumerate}
     \setcounter{enumi}{17}
     \item 
-    \item
+ The stator current space vector as a function of the stator flux and the permanent magnet flux is:
+ \begin{equation}
+i^{s}_{s} = \frac{1}{L_s} \left( \psi^{s}_{s} - \psi^{s}_{PM} \right)
+\end{equation}
+ 
+Therefore, the signal flow diagram for the permanent magnet synchronous machine is:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/SignalFlowDiagram_PMSM.png}
+    \caption{Signal Flow Diagram of the permanent magnet synchronous machine}
+    \label{fig:Signal Flow Diagram PMSM}
+\end{figure}
+\item 
+The nominal angular frequency $\omega_{N}$ and the nominal torque $M_{MN}$ are:
+\begin{equation}
+    \begin{aligned}
+    \omega_{N} = \frac{2 \pi \cdot N_{N}}{60} 
+= \frac{2 \pi \cdot 2000}{60} 
+\approx 209.44 \,\text{rad/s}\\
+M_{MN} = \frac{P_{N}}{\omega_{N}} 
+= \frac{4400}{209.44} 
+\approx 21.01 N\cdot m
+    \end{aligned}
+\end{equation}
+
 \end{enumerate}
 
 
