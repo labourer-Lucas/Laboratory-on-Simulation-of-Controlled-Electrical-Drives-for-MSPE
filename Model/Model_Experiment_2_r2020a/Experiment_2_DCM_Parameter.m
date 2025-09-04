@@ -41,7 +41,7 @@ T_A = L_A/R_A;              % Time Constant [s]
 R_E = 2200;                 % Resistance [Ohm]
 
 % Mechanic
-Theta_M = 0.0013;           % Rotor Inertia Moment [kg*m²]
+Theta_M = 0.0013;           % Rotor Inertia Moment [kg*m]
 C_M = 0.96;                 % Machine Constant [1]
 Psi_EN = 1;                 % Nominal Excitation Flux Linkage [Vs]
 %--------------------------------------------------------------------------
@@ -86,20 +86,34 @@ n_Imin = -n_Imax;       % Minimum Noise Amplitude (Percent)[1]
 %% ### PARAMETER CONTROLLER ###
 %--------------------------------------------------------------------------
 % Measurment Value Filtering
-T_f_I_A = 0;              % Time Constant PT1-Filter I_A [s]
-T_f_I_E = 0;              % Time Constant PT1-Filter I_E [s]
-T_f_Omega_M = 0;          % Time Constant PT1-Filter Omega [s] 
+T_f_I_A = 0.002;              % Time Constant PT1-Filter I_A [s]
+T_f_I_E = 0.002;              % Time Constant PT1-Filter I_E [s]
+T_f_Omega_M = 0.002;          % Time Constant PT1-Filter Omega [s] 
 %--------------------------------------------------------------------------
 
 %--------------------------------------------------------------------------
 % Current Controller:
+V_S_I_A=V_CON/R_A;
+T_n_I_A=T_A;
+T_sigma_I_A=T_f_I_A+T_CON;
 
+V_r_I_A=T_A/(2*V_S_I_A*T_sigma_I_A);
+K_p_i=V_r_I_A;
+K_i_i=V_r_I_A/T_n_I_A; %0.283/0.017
 
 %--------------------------------------------------------------------------
 
 %--------------------------------------------------------------------------
 % Rotor Speed Controller
-
+T_equ_I_A=2*T_sigma_I_A-T_f_I_A;%4ms
+V_s_omega_m=R_A/(C_M*Psi_EN);%22.92
+T_1_omega_m=(R_A*Theta_M)/(C_M*Psi_EN)^2;%31ms
+T_sigma_omega_m=T_equ_I_A+T_f_Omega_M; %6ms
+T_n_omega_m=4*T_sigma_omega_m; %24ms
+V_r_omega_m=T_1_omega_m/(2*V_s_omega_m*T_sigma_omega_m); %0.113
+K_p_omega=V_r_omega_m;
+K_i_omega=V_r_omega_m/T_n_omega_m;
+T_G=4*T_sigma_omega_m;
 
 
 %--------------------------------------------------------------------------
