@@ -29,3 +29,8 @@ Theta_M = 1.0e-3;       % Rotor Inertia Moment [kg*m^2]
 
 f_N = 100;              % Voltage Nominal Frequency with Symmetrical Sinusodial Feed [Hz]
 
+u_s_hat = 400*sqrt(2)/sqrt(3);
+
+omega_n = 2*pi*2000/60;
+
+M_mn = 4400/omega_n;

@@ -13,7 +13,7 @@ clear all;
 
 %--------------------------------------------------------------------------
 dt = 1e-5;           % Step Size [s]
-t_end = 1;           % Simulation Length [s]
+t_end = 3;           % Simulation Length [s]
 %--------------------------------------------------------------------------
 
 %% ### MODEL PARAMETERS OF THE INVESTIGATED ASYNCHRONOUS MACHINE ###
@@ -22,7 +22,7 @@ P_N = 2.2e3;                          % Nominal Power [W]
 N_N = 2890;                           % Nominal Rotor Speed [RPM] 
 omega_MN = N_N*pi/30;                 % Nominal Rotor Speed [rad/s]
 M_MN = P_N / (N_N*pi/30);             % Nominal Torque [N.m]
-
+M_MN_PMSM = 21.01;
 L_m = 0.326;                          % Mutual Inductance between Stator and Rotor [H]
 
 R_s = 2.2;                            % Stator Resistance [Ohm]
@@ -37,6 +37,10 @@ sigma = (L_s*L_r - L_m^2)/(L_s*L_r);  % Leakage Coefficient [1]
 
 p = 1;                                % Pole Pair Number [1]
 
-Theta_M = 0.0022;                     % Rotor Inertia Moment [kg*m^2]
+Theta_M = 0.02;                     % Rotor Inertia Moment [kg*m^2]
 
+
+%% Poower source 
+u_s_hat=400*sqrt(2)/sqrt(3);
+omega_e=2*pi*50; %rad/s
 
