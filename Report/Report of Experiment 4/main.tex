@@ -21,18 +21,165 @@
 \subsection{ Current Control Loop}
 \begin{enumerate}
 \item 
+From equatin in instrruction, we have the differential equation of the rotor current as:
+\begin{equation}
+    \mathbf{i}_r=\frac{\mathbf{\Psi}_r-L_m\mathbf{i}_s}{L_r},\quad\frac{d\mathbf{i}_r}{dt}=\frac{1}{L_r}\left(\frac{d\mathbf{\Psi}_r}{dt}-L_m\frac{d\mathbf{i}_s}{dt}\right)
+\end{equation}
+and the differential equation of the rotor flux can be derived as:
+\begin{equation}
+    \frac{d\Psi_r}{dt}=-\frac{R_r}{L_r}\boldsymbol{\Psi}_r+\frac{L_mR_r}{L_r}\mathbf{i}_s-(\omega_K-\omega)\mathbf{J}\boldsymbol{\Psi}_r
+\end{equation}
+
+Substituting the equation of rotor flux into the equation of stator flux, we have:
+\begin{equation}
+   \frac{d\boldsymbol{\Psi}_s}{dt}=L_s\frac{d\mathbf{i}_s}{dt}+L_m\frac{d\mathbf{i}_r}{dt}=\left(L_s-\frac{L_m^2}{L_r}\right)\frac{d\mathbf{i}_s}{dt}-\frac{L_mR_r}{L_r^2}\boldsymbol{\Psi}_r-\frac{L_m}{L_r}(\omega_K-\omega)\mathbf{J}\boldsymbol{\Psi}_r+\frac{L_m^2R_r}{L_r^2}
+\end{equation}
+
+$\omega_K\mathbf{J}\Psi_s$ can be expressed as:
+\begin{equation}
+    \omega_K\mathbf{J}\boldsymbol{\Psi}_s=\omega_K\left(L_s-\frac{L_m^2}{L_r}\right)\mathbf{J}\mathbf{i}_s+\omega_K\frac{L_m}{L_r}\mathbf{J}\boldsymbol{\Psi}_r
+\end{equation}
+
+Finally, the differential equation of the stator voltage can be derived as:
+\begin{equation}
+    \mathbf{u}_s=\left(R_s+\frac{L_m^2}{L_r^2}R_r\right)\mathbf{i}_s+\left(L_s-\frac{L_m^2}{L_r}\right)\frac{d\mathbf{i}_s}{dt}+\omega_KL^{\prime}\mathbf{J}\mathbf{i}_s+\left(-\frac{L_mR_r}{L_r^2}\mathbf{I}+\frac{\omega L_m}{L_r}\mathbf{J}\right)\mathbf{\Psi}_r
+\end{equation}
+
+To simplify the equation, we can define the following parameters:
+\begin{equation}
+    \begin{aligned}
+        R^{\prime}&=R_s+\left(\frac{L_m}{L_r}\right)^2R_r=4.966\Omega\\
+        L^{\prime}&=L_s-\frac{L_m^2}{L_r}=\sigma L_s=27.424mH\\
+        \sigma&=1-\frac{L_m^2}{L_sL_r}
+    \end{aligned}
+\end{equation}
+
+The final equation of the stator voltage in d-q frame is:
+\begin{equation}
+    \begin{aligned}
+        u_s^d&=R^{\prime}i_s^d+L^{\prime}\frac{di_s^d}{dt}+\left(-\omega_KL^{\prime}\right)i_s^q+\left(-\frac{L_mR_r}{L_r^2}\right)\Psi_r^d+\frac{\omega L_m}{L_r}(-\Psi_r^q)\\
+        u_s^q&=R^{\prime}i_s^q+L^{\prime}\frac{di_s^q}{dt}+\left(+\omega_KL^{\prime}\right)i_s^d+\left(+\frac{\omega L_m}{L_r}\right)\Psi_r^d+\left(-\frac{L_mR_r}{L_r^2}\right)\Psi_r^q
+    \end{aligned}
+\end{equation}
+
+Therefore,  the coefficients $a_1$, $a_2$, $b_1$, $b_2$ are:
+\begin{equation}
+    \begin{aligned}
+        a_1&=-\frac{L_mR_r}{L_r^2},\quad a_2\frac{\omega L_m}{L_r}\\
+        b_1&=-\omega_KL^{\prime},\quad b_2=\omega_KL^{\prime}
+    \end{aligned}
+\end{equation}
 \item 
+The Laplace transformation of the differential equations of the stator voltage in d-q frame is:
+\begin{equation}
+    \begin{aligned}
+        U_{s}^d(s)=\left(R^{\prime}+L^{\prime}s\right)I_{s}^d(s)+a_1\Psi_r^d(s)+b_1I_s^q(s)\\
+        U_{s}^q(s)=\left(R^{\prime}+L^{\prime}s\right)I_{s}^q(s)+a_2\Psi_r^d(s)+b_2I_s^d(s)
+    \end{aligned}
+\end{equation}
+The signal flow graph of the above equations is shown in Fig. \ref{fig:signal_flow_graph}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/signal_flow_graph.png}
+    \caption{Signal Flow Graph of the Stator Voltage Equations in d-q Frame}
+    \label{fig:signal_flow_graph}
+\end{figure}
+
+ The values of $a_1\Psi_r^d+b_1I_s^q$ and $a_2\Psi_r^d+b_2I_s^d$ can be considered as disturbance inputs to the system. To eliminate the effects of these disturbances, we can use the feedforward control method. The compansated stator voltages are given in the next question.
+
 \item 
+The trnasfer functions $F_{i}(s)$ of the current and the desired voltages is:
+\begin{equation}
+    \begin{aligned}
+    F_{i}(s)&=\frac{I_s^s}{U_s^{s*}(s)}=\frac{1}{R^{\prime}+L^{\prime}s}\cdot G_U(s)\\
+        &=\frac{V_{i_s}V_{PE}}{(1+T_{i_s}s)\left(1+T_{PE}s\right)}
+    \end{aligned}
+\end{equation}
+where $V_{i_s}=\frac{1}{R^{\prime}}=0.2014$, $T_{i_s}=\frac{L^{\prime}}{R^{\prime}}=5.522ms$, $V_{PE}=\frac{U_{DC}}{2}=280V$ and $T_{PE}=250\mu s$ are the gain and time constant of the power electronics.
+
+and the desired voltages $U_s^{s*}(s)$ are:
+\begin{equation}
+    \begin{aligned}
+        U_s^{d*\prime}(s)&=U_s^{d*}(s)-a_1\Psi_r^d(s)-b_1I_s^q(s)\\
+        U_s^{q*\prime }(s)&=U_s^{q*}(s)-a_2\Psi_r^d(s)-b_2I_s^d(s)
+    \end{aligned}
+\end{equation}
+
+Therefore, the parameters of the plant transfer function $F_{i}(s)$ are:
+\begin{equation}
+    \begin{aligned}
+V_{i} & =V_{i_{s}}\cdot V_{PE}=\frac{1}{R^{\prime}}\cdot\frac{U_{DC}}{2}=56.38 \\
+T_{1,i} & =T_{i_{s}}=\frac{L^{\prime}}{R^{\prime}}=0.0055\mathrm{s}=5.52\mathrm{ms} \\
+T_{\sigma,i} & =T_{PE}=250\mathrm{\mu s}
+\end{aligned}
+\end{equation}
+
 \item 
+With information above, we can design the PI controller for the current control loop. It's a PT2 systm. Therefore, the parameters of the PI controller can be designed as:
+\begin{equation}
+    \begin{aligned}
+        G_{PI,i}(s)&=V_{\mathrm{C,i}}\frac{1+sT_{\mathrm{n,i}}}{sT_{\mathrm{n,i}}}\\
+        V_{C,i}&=\frac{T_{1,i}}{2T_{\sigma,i}\cdot V_i}=0.196\\
+        T_{n,i}&=T_{1,i}=5.52\mathrm{ms}
+    \end{aligned}
+\end{equation}
 \end{enumerate}
 \subsection{ Flux and Rotor Speed Control}
 \begin{enumerate}
 \setcounter{enumi}{8}
 \item 
+The transfer function of the closed loop current control system is:
+\begin{equation}
+    F_{sub,i}(s)=\frac{I_s^s(s)}{I_s^{s*}(s)}=\frac{F_i(s)G_{PI,i}(s)}{1+F_i(s)G_{PI,i}(s)}=\frac{1}{1+s2T_{PE}s+s^2T^2_{PE}}
+\end{equation}
+
+where $T^2_{PE} \ll 1$ can be neglected. Therefore, the simplified transfer function of the closed loop current control system is:
+\begin{equation}
+    F_{sub,i}(s)=\frac{1}{1+sT_{equi,i}}
+\end{equation}
+where $T_{equi,i}=2T_{PE}=500\mu s$ is the equivalent time constant of the closed loop current control system.
 \item 
+From the differential equation of the rotor flux, we can derive the transfer function of the rotor flux as:
+\begin{equation}
+    F_{\Psi i}(s)=\frac{\Psi_r^d(s)}{i_s^{d}(s)}=\frac{L_m}{s+\frac{R_r}{L_r}}=\frac{V_{\Psi}}{1+sT_{\Psi}}
+\end{equation}
+where $V_{\Psi}=L_m=0.326$ and $T_{\Psi}=\frac{L_r}{R_r}=0.1172s$ are the gain and time constant of the rotor flux.
+
+Considering the closed loop current control system, the transfer function from the desired d-axis current to the rotor flux is:
+\begin{equation}
+    F_{\Psi_r}(s)=\frac{\Psi_r^d(s)}{i_s^{d*}(s)}=\frac{V_{\Psi}}{(1+sT_{\Psi})(1+sT_{equi,i})}
+\end{equation}
+
+The small and large time constants are $T_{\sigma,\Psi_r}=T_{equi,i}=500\mu s$ and $T_{1,\Psi_r}=T_{\Psi}=0.1172s$ respectively.
 \item 
+It's a PT2 system. The parameters of the PI controller for the flux control loop can be designed as:
+\begin{equation}
+    \begin{aligned}
+        G_{PI,\Psi}(s)&=V_{C,\Psi}\frac{1+sT_{n,\Psi}}{sT_{n,\Psi}}\\
+        V_{C,\Psi}&=\frac{T_{1,\Psi}}{2T_{\sigma,\Psi}V_{\Psi}}=359.5\\
+        T_{n,\Psi}&=T_{1,\Psi}=0.1172s
+    \end{aligned}
+\end{equation}
 \setcounter{enumi}{13}
 \item 
+The transfer function of the speed loop can be derived as:
+\begin{equation}
+    \begin{aligned}
+    F_{\omega}(s)=\frac{\omega(s)}{i_s^{q*}(s)} &=\frac{\hat{\omega}_m(s)}{{\omega}_m(s)}\cdot \frac{{\omega}_m(s)}{M_M(s)}\cdot \frac{M_M(s)}{i_s^{q}(s)}\cdot \frac{i_s^{q}(s)}{i_s^{q*}(s)}\\
+        &=\frac{1}{1+sT_{f,\omega}}\cdot\frac{3}{2}p\frac{L_m}{L_{r}}\psi_{r,k} \cdot\frac{1}{\Theta_{m}s}\cdot \frac{1}{1+T_{equi,i}s}\\
+        &=\frac{V_{S,\omega_{M}}}{T_{1,\omega_{M}}s(1+T_{\sigma,\omega_{M}}s)}
+        \end{aligned} 
+\end{equation}
+    where $V_{S,\omega_{M}}=\frac{3\pi f_{N}L_m\psi_{rN}}{M_{MN}L_{r}}= 59.05$, $T_{1,\omega_{M}}=\frac{\Theta_M2\pi f_N}{pM_{MN}}=0.0951$ and $T_{\sigma,\omega_{M}}=T_{equi,i}+T_{f,\omega}=2.5ms$ are the gain, large and small time constants of the speed control loop.
+
 \item
+It's a IT1 system. The $M_{L}$ is disturbance input. we want SO optimization. Therefore, the parameters of the PI controller for the speed control loop can be designed as:
+\begin{equation}
+    \begin{aligned}
+        G_{PI,\omega}(s)&=V_{C,\omega}\frac{1+sT_{n,\omega}}{sT_{n,\omega}}\\
+        V_{C,\omega}&=\frac{T_{1,\omega}}{2T_{\sigma,\omega}V_{S,\omega}}=0.322\\
+        T_{n,\omega}&=4T_{\sigma,\omega}=0.01s
+    \end{aligned}
+\end{equation}
 \end{enumerate}
 \end{document}
