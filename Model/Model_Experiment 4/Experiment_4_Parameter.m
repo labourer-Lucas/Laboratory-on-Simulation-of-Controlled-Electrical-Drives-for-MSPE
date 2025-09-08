@@ -96,4 +96,3 @@ T_n_omecga_m = 4*T_sigma_omega_m;
 K_p_omega=V_C_omega;
 K_i_omega=V_C_omega/T_n_omecga_m;
 
-
