@@ -1,0 +1,111 @@
+\documentclass[12pt,a4paper, openany]{book}
+\makeatletter
+\setlength{\unitlength}{1cm}
+\input{include/MyPackages}
+\usepackage{listings}
+\input{include/MyOutlay}
+\input{include/MyMacrosAndCommands}
+\listfiles
+\begin{document}
+\pagenumbering{roman}
+
+\input{cover_page}
+
+%\tableofcontents
+
+\pagenumbering{arabic}
+\setcounter{chapter}{4} % command for changing the chapter counter
+\chapter{Experiment 5 \\    Direct Torque Control of the AC Drive}
+
+ \setcounter{section}{2} % command for changing the section counter
+\section{ Implementation of the Direct Torque Control}
+\subsection{Flux and Torque Control Loop}
+\begin{enumerate}
+    \item The signal flow diagram of the switching state to the output voltage is shown below:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/switching_state_to_output_voltage.png}
+        \caption{Switching State to Output Voltage Signal Flow Diagram}
+        \label{fig:switching_state_to_output_voltage}
+    \end{figure}
+
+    The table of the switching states and the corresponding voltage is given below:
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            $S_1$ & $S_3$ & $S_5$ & $V_{s\alpha}$ & $V_{s\beta}$ \\
+            \hline 
+            0 & 0 & 0 & 0 & 0 \\
+            1 & 0 & 0 & $\frac{2}{3}V_{dc}$ & 0 \\
+            0 & 1 & 0 & $-\frac{1}{3}V_{dc}$ & $\frac{1}{\sqrt{3}}V_{dc}$ \\
+            1 & 1 & 0 & $\frac{1}{3}V_{dc}$ & $\frac{1}{\sqrt{3}}V_{dc}$ \\
+            0 & 0 & 1 & $-\frac{1}{3}V_{dc}$ & $-\frac{1}{\sqrt{3}}V_{dc}$ \\
+            1 & 0 & 1 & $\frac{1}{3}V_{dc}$ & $-\frac{1}{\sqrt{3}}V_{dc}$ \\
+            0 & 1 & 1 & $-\frac{2}{3}V_{dc}$ & 0 \\
+            1 & 1 & 1 & 0 & 0 \\    
+            \hline
+        \end{tabular}
+        \caption{Switching States and Corresponding Voltages}
+        \label{tab:switching_states}
+    \end{table}
+    
+    These vcectors can be represented in a hexagonal diagram as shown below:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{figures/hexagonal_diagram.png}
+        \caption{Hexagonal Diagram of Voltage Vectors}
+        \label{fig:hexagonal_diagram}
+    \end{figure}
+    \item 
+    The signal flow diagrams of the flux and the torque estimator:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/flux_estimator.png}
+        \caption{Flux Estimator Signal Flow Diagram}
+        \label{fig:flux_estimator}
+    \end{figure}
+    \item 
+     The signal flow diagram for the determination of the absolute value and the angle of the space vector of the stator flux is shown below:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/flux_magnitude_angle.png}
+        \caption{Flux Magnitude and Angle Determination Signal Flow Diagram}
+        \label{fig:flux_magnitude_angle}
+    \end{figure}
+    \item 
+    we can use the angle of the stator flux to determine the sector. The matlab function Implementation is given below:
+    \begin{lstlisting}[language=Matlab, caption=Sector Determination Function]
+theta = atan2(psi_beta, psi_alpha);                
+sector = floor(theta/(pi/3)) + 1;                
+
+\end{lstlisting}
+    \item
+    For the torque comparator, when $h_M$ is 1, it means that the actual torque is less than the reference torque, and when $h_M$ is -1, it means that the actual torque is greater than the reference torque. When $h_M$ is 0, it indicates that the actual torque is equal to the reference torque. Therefore, we have to increase, decrease or maintain the torque respectively. 
+
+    For the flux comparator, when $h_{\psi_s}$ is 1, it means that the actual flux is less than the reference flux, and when $h_{\psi_s}$ is -1, it means that the actual flux is greater than the reference flux. Therefore, we have to increase or decrease the flux respectively.
+
+    The switching table for the DTC is given below. The underlined switching states are the ones that should be applied.
+    \begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cc*{6}{c}}
+\hline
+$h_{\psi_s}$ & $h_M$ & $S_1$ & $S_2$ & $S_3$ & $S_4$ & $S_5$ & $S_6$ \\
+\hline
+1 & 1  & \underline{$v_2$} & \underline{$v_3$} & \underline{$v_4$} & \underline{$v_5$} & \underline{$v_6$} & \underline{$v_1$} \\
+1 & 0  & \underline{$v_1$} & \underline{$v_2$} & \underline{$v_3$} & \underline{$v_4$} & \underline{$v_5$} & \underline{$v_6$} \\
+1 & -1 & \underline{$v_6$} & \underline{$v_1$} & \underline{$v_2$} & \underline{$v_3$} & \underline{$v_4$} & \underline{$v_5$} \\
+\hline
+-1 & 1  & \underline{$v_3$} & \underline{$v_4$} & \underline{$v_5$} & \underline{$v_6$} & \underline{$v_1$} & \underline{$v_2$} \\
+-1 & 0  & \underline{$v_4$} & \underline{$v_5$} & \underline{$v_6$} & \underline{$v_1$} & \underline{$v_2$} & \underline{$v_3$} \\
+-1 & -1 & \underline{$v_5$} & \underline{$v_6$} & \underline{$v_1$} & \underline{$v_2$} & \underline{$v_3$} & \underline{$v_4$} \\
+\hline
+\end{tabular}
+\caption{Switching Table for Direct Torque Control}
+\label{tab:dtc_switching_table}
+\end{table}
+\end{enumerate}
+
+\end{document}
