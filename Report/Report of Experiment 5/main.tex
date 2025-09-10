@@ -76,7 +76,8 @@
     \item 
     we can use the angle of the stator flux to determine the sector. The matlab function Implementation is given below:
     \begin{lstlisting}[language=Matlab, caption=Sector Determination Function]
-theta = atan2(psi_beta, psi_alpha);                
+theta = atan2(psi_beta, psi_alpha);  
+theta= mod(theta+pi/6, 2*pi);              
 sector = floor(theta/(pi/3)) + 1;                
 
 \end{lstlisting}
